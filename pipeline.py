@@ -2,7 +2,8 @@
 Core pipeline for the AI Resume Screener.
 Handles PDF loading, text chunking, and embeddings.
 """
-
+import os
+from langchain_groq import ChatGroq
 from pathlib import Path
 
 from langchain_community.document_loaders import PyPDFLoader
@@ -107,13 +108,20 @@ def rank_resumes(store, job_description, k=10):
     return results
 
 def connect_llm():
-    """Connect to the locally installed Ollama model."""
+    """Connect to the Groq cloud language model."""
 
-    return ChatOllama(
-        model=LLM_MODEL,
+    api_key = os.getenv("GROQ_API_KEY")
+
+    if not api_key:
+        raise ValueError(
+            "GROQ_API_KEY is missing. Configure it in Streamlit Secrets."
+        )
+
+    return ChatGroq(
+        model="llama-3.3-70b-versatile",
         temperature=0,
+        api_key=api_key,
     )
-
 
 def explain_candidate(llm, job_description, resume_text):
     """Generate a concise, evidence-based candidate evaluation."""
