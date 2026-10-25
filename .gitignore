@@ -1,0 +1,8 @@
+myenv/
+venv/
+__pycache__/
+*.pyc
+.env
+stored_faiss/
+.streamlit/secrets.toml
+sample_resumes/
