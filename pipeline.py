@@ -59,7 +59,6 @@ def create_embeddings():
     )
 
 from langchain_community.vectorstores import FAISS
-from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 
 
